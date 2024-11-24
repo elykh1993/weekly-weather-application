@@ -17,6 +17,7 @@ getWeatherBtn.addEventListener('click', () => {
         fetchWeatherData(city);
     } else {
         weatherResult.innerHTML = `<p>Please enter a city name!</p>`;
+        weeklyForecast.innerHTML = ''; // Clear previous weekly forecast
     }
 });
 
@@ -28,7 +29,7 @@ async function fetchWeatherData(city) {
 
         if (data.cod === 200) {
             displayWeather(data);
-            fetchWeeklyForecast(city); // Fetch weekly forecast
+            fetchWeeklyForecast(data.coord.lat, data.coord.lon); // Fetch weekly forecast using coordinates
         } else {
             weatherResult.innerHTML = `<p>City not found!</p>`;
             weeklyForecast.innerHTML = ''; // Clear previous weekly forecast
@@ -41,13 +42,13 @@ async function fetchWeatherData(city) {
 }
 
 // Function to fetch weekly weather forecast
-async function fetchWeeklyForecast(city) {
+async function fetchWeeklyForecast(lat, lon) {
     try {
-        const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast/daily?q=${city}&cnt=7&appid=${apiKey}&units=metric`);
+        const response = await fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=current,minutely,hourly,alerts&appid=${apiKey}&units=metric`);
         const data = await response.json();
 
-        if (data.cod === '200') {
-            displayWeeklyForecast(data);
+        if (data.daily) {
+            displayWeeklyForecast(data.daily);
         } else {
             weeklyForecast.innerHTML = `<p>Weekly forecast not available!</p>`;
         }
@@ -72,8 +73,8 @@ function displayWeather(data) {
 }
 
 // Function to display weekly forecast
-function displayWeeklyForecast(data) {
-    const forecastHtml = data.list.map(day => {
+function displayWeeklyForecast(daily) {
+    const forecastHtml = daily.slice(1, 8).map(day => { // Skip today and get the next 7 days
         const date = new Date(day.dt * 1000).toLocaleDateString();
         const temp = day.temp.day;
         const description = day.weather[0].description;
