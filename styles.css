@@ -1,0 +1,60 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #eae7f0;
+    color: #4b0082;
+    /* Purple theme */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    text-align: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.logo {
+    width: 100px;
+    /* Adjust width as needed */
+    margin-bottom: 20px;
+    /* Space between logo and title */
+}
+
+input {
+    padding: 10px;
+    border: 1px solid #4b0082;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+button {
+    padding: 10px;
+    background-color: #4b0082;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #3b0072;
+}
+
+#weatherResult {
+    margin-top: 20px;
+    text-align: left;
+}
+
+footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #4b0082;
+}
